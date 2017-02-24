@@ -1,42 +1,51 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mburson <marvin@42.fr>                     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/02/23 19:31:26 by mburson           #+#    #+#              #
+#    Updated: 2017/02/23 19:31:28 by mburson          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-CHECKER = checker
+NAME = lem-in
 
-PUSH_SWAP = push_swap
+LIBFTPRINTF = ./src/ft_printf/libftprintf.a
+LIBFTPRINTF_DIR = ./src/ft_printf
 
-LIBFT = ./libft/libft.a
-LIBFT_DIR = ./libft/
-
-SRC = 
+SRC = \
+	$(addprefix ./src/, \
+		lem_in.c \
+	)
 
 OBJ = $(SRC:.c=.o)
 
-HEADERS = -I ./src -I ./src/libft
+HEADERS = -I ./src -I $(LIBFTPRINTF_DIR) -I $(LIBFTPRINTF_DIR)/libft
 
 CFLAGS = -Wall -Wextra -Werror
 
-all: $(CHECKER) $(PUSH_SWAP)
+all: $(NAME)
 
-$(CHECKER): $(LIBFT) $(CHECKER_OBJ)
-	gcc $(CFLAGS) -o $@ $^
-
-$(PUSH_SWAP): $(LIBFT) $(PUSH_SWAP_OBJ)
+$(NAME): $(OBJ) $(LIBFTPRINTF)
 	gcc $(CFLAGS) -o $@ $^
 
 %.o: %.c
 	gcc $(CFLAGS) $(HEADERS) -c -o $@ $<
 
-$(LIBFT): force
-	@echo building libft
-	cd ./libft && $(MAKE)
+$(LIBFTPRINTF): force
+	@echo "\e[1mbuilding libftprintf\e[0m"
+	cd $(LIBFTPRINTF_DIR) && $(MAKE)
 
 force:
 	@true
 
 clean:
-	rm -f $(CHECKER_OBJ) $(PUSH_SWAP_OBJ)
-	cd ./libft && $(MAKE) fclean
+	rm -f $(OBJ)
+	cd ./$(LIBFTPRINTF_DIR) && $(MAKE) fclean
 fclean: clean
-	rm -f $(CHECKER) $(PUSH_SWAP)
+	rm -f $(NAME)
 re: fclean all
 
 .PHONY: all clean fclean re
