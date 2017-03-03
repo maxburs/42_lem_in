@@ -1,6 +1,11 @@
 // Place your settings in this file to overwrite default and user settings.
 {
     "editor.rulers": [80],
-    "editor.insertSpaces": false,
-    "editor.detectIndentation": false
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/.DS_Store": true,
+		"**/._*": true
+	}
 }
