@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem-in.h                                           :+:      :+:    :+:   */
+/*   get_raw_graph.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mburson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/23 19:34:28 by mburson           #+#    #+#             */
-/*   Updated: 2017/02/23 19:34:29 by mburson          ###   ########.fr       */
+/*   Created: 2017/02/23 20:43:10 by mburson           #+#    #+#             */
+/*   Updated: 2017/02/23 20:43:12 by mburson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEM_IN_H
-# define LEM_IN_H
+#include <unistd.h>
+#include <libft.h>
+#include <stdbool.h>
+#include <lem_in.h>
 
-# include <libft.h>
-
-extern int		g_flags;
-
-# define FLAG_VERBOSE 0x1
-# define BUFF_SIZE 64
-
-typedef struct	s_node
+char	*get_raw_graph(void)
 {
-	char	*name;
-	t_listm	*links;
-	int		path;
-}				t_node;
+	t_lstr	*graph;
+	int		ret;
+	char	buff[BUFF_SIZE + 1];
 
-char			*get_raw_graph(void);
-void			build_node_graph();
-
-#endif
+	graph = NULL;
+	while ((ret = read(0, buff, BUFF_SIZE)))
+	{
+		buff[ret] = '\0';
+		ft_lstr_add(&graph, ft_strdup(buff), false);
+	}
+	return (ft_lstr_finish(&graph));
+}

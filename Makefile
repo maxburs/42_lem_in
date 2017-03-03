@@ -17,6 +17,7 @@ LIBFTPRINTF_DIR = ./src/ft_printf
 
 SRC = \
 	$(addprefix ./src/, \
+		get_raw_graph.c \
 		lem_in.c \
 	)
 
