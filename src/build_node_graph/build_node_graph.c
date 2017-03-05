@@ -50,7 +50,12 @@ static size_t		get_node_count(const char *graph_raw)
 	}
 	return (node_count);
 }
+/*
+static void			get_node_names(const char *graph_raw, t_node *node_arr)
+{
 
+}
+*/
 int					build_node_graph(char *graph_raw,
 							t_node **graph, size_t *node_count)
 {

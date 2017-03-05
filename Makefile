@@ -18,6 +18,7 @@ LIBFTPRINTF_DIR = ./src/ft_printf
 SRC = \
 	$(addprefix ./src/, \
 		get_raw_graph.c \
+		helper.c \
 		lem_in.c \
 		validate_raw_graph.c \
 		$(addprefix build_node_graph/, \
