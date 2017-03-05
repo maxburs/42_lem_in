@@ -9,6 +9,7 @@
 		"**/.hg": true,
 		"**/.DS_Store": true,
 		"**/*.o": true,
-		"**/*.a": true
+		"**/*.a": true,
+		"**/._*": true
 	}
 }
