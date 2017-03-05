@@ -10,28 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEM_IN_H
-# define LEM_IN_H
+#include <lem_in.h>
+#include <stdlib.h>
+#include <string.h>
 
-# include <libft.h>
-
-extern int		g_flags;
-
-# define FLAG_VERBOSE 0x1
-# define FLAG_VVERBOSE 0x2
-# define BUFF_SIZE 64
-# define ROOM_NAME_EXCLUDES " \n-"
-
-typedef struct	s_node
+t_node		*new_node(char *name)
 {
-	char	*name;
-	t_listm	*links;
-	int		path;
-}				t_node;
+	t_node	*node;
 
-char			*get_raw_graph(void);
-int				validate_raw_graph(char *graph_raw);
-int				build_node_graph(char *graph_raw,
-							t_node **graph, size_t *node_count);
-
-#endif
+	if (!(node = (t_node*)malloc(sizeof(t_node))))
+		return (NULL);
+	node->name = name;
+	node->links = NULL;
+	node->path = 0;
+	return (node);
+}

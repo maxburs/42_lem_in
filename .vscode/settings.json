@@ -2,5 +2,13 @@
 {
     "editor.rulers": [80],
     "editor.insertSpaces": false,
-    "editor.detectIndentation": false
+	"editor.detectIndentation": false,
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/.DS_Store": true,
+		"**/*.o": true,
+		"**/*.a": true
+	}
 }

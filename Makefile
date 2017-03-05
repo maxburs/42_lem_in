@@ -19,6 +19,13 @@ SRC = \
 	$(addprefix ./src/, \
 		get_raw_graph.c \
 		lem_in.c \
+		validate_raw_graph.c \
+		$(addprefix build_node_graph/, \
+			build_node_graph.c \
+		) \
+		$(addprefix node_graph/, \
+			node.c \
+		) \
 	)
 
 OBJ = $(SRC:.c=.o)
