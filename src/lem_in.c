@@ -21,7 +21,6 @@ int		main(int argc, char **argv)
 {
 	char	*graph_raw;
 	t_node	*graph;
-	size_t	node_count;
 
 	g_flags = 0;
 	if (argc == 2 && ft_strcmp(argv[1], "-v") == 0)
@@ -42,8 +41,9 @@ int		main(int argc, char **argv)
 		ft_printf("ERROR\n");
 		return (0);
 	}
-	build_node_graph(graph_raw, &graph, &node_count);
+	build_node_graph(graph_raw, &graph);
 	free(graph_raw);
+	print_graph(graph);
 	//organize_node_graph(&graph);
 	//move_ants(graph);
 	free(graph);

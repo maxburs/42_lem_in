@@ -13,6 +13,8 @@
 #include <libft.h>
 #include <stdbool.h>
 #include <lem_in.h>
+#include <string.h>
+#include <ft_printf.h>
 
 void			print_line(char const *title, char const *line)
 {
@@ -25,4 +27,24 @@ void			print_line(char const *title, char const *line)
 		line++;
 	}
 	ft_putchar('\n');
+}
+
+char const		*line_end(char const *line)
+{
+	while (*line != '\n' && *line != '\0')
+		line++;
+	return (line);
+}
+
+void			print_graph(t_node *node)
+{
+	while (node->name)
+	{
+		ft_printf("%16s: ", node->name);
+		//connections will be printed here
+		if (node->property)
+			ft_printf("(%s)", node->property);
+		ft_putchar('\n');
+		node++;
+	}
 }

@@ -49,42 +49,54 @@ static size_t		get_node_count(const char *graph_raw)
 	return (node_count);
 }
 
-static void			get_node_names(const char *graph_raw, t_node *node_arr)
+static void			get_node_names(char *graph_raw, t_node *node_arr)
 {
-	size_t		i;
-	char const	property;
+	char		*property;
 
 	property = NULL;
-	i = 0;
 	while (true)
 	{
-		if (is_node(graph_raw))
+		print_line("getting names: ", graph_raw);
+		if (graph_raw[0] == '#' && graph_raw[1] == '#' && !property)
 		{
-
+			graph_raw += 2;
+			property = ft_strndup(graph_raw, line_end(graph_raw) - graph_raw);
 		}
-		else if (graph_raw[0] == '#' && graph_raw[1] = '#')
+		else if (is_node(graph_raw))
 		{
-			property = graph_raw + 2;
+			node_arr->name = ft_strndup(graph_raw,
+											ft_strchri(graph_raw, ' '));
+			if (property)
+			{
+				node_arr->property = property;
+				property = NULL;
+			}
+			else
+				node_arr->property = NULL;
+			node_arr++;
 		}
 		if ((graph_raw = ft_strchr(graph_raw, '\n')) == NULL)
 			break ;
+		ft_printf("hello\n");
 		graph_raw++;
 	}
-	return (node_count);
 }
 
-int					build_node_graph(char *graph_raw,
-							t_node **graph, size_t *node_count)
+int					build_node_graph(char *graph_raw, t_node **graph)
 {
 	//char	*ptr;
 	t_node		*node_arr;
+	size_t		node_count;
 
-	*node_count = get_node_count(graph_raw);
-	ft_printf("node count: %zu\n", *node_count);
-	if (!(node_arr = (t_node*)malloc(sizeof(t_node) * *node_count)))
+	node_count = get_node_count(graph_raw);
+	ft_printf("node count: %zu\n", node_count);
+	if (!(node_arr = (t_node*)malloc(sizeof(t_node) * node_count)))
 		return (1);
-	get_node_names(graph_raw, node_arr);
-
+	ft_printf("test\n");
 	*graph = node_arr;
+	node_arr[node_count].name = NULL;
+	ft_printf("test\n");
+	get_node_names(graph_raw, node_arr);
+	ft_printf("hello\n");
 	return (0);
 }

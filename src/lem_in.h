@@ -25,14 +25,17 @@ extern int		g_flags;
 typedef struct	s_node
 {
 	char	*name;
+	char	*property;
 	t_listm	*links;
 	int		path;
 }				t_node;
 
+void			print_graph(t_node *node);
 void			print_line(char const *title, char const *line);
+char const		*line_end(char const *line);
+
 char			*get_raw_graph(void);
 int				validate_raw_graph(char *graph_raw);
-int				build_node_graph(char *graph_raw,
-							t_node **graph, size_t *node_count);
+int				build_node_graph(char *graph_raw, t_node **graph);
 
 #endif
