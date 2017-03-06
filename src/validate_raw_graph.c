@@ -19,6 +19,8 @@ static void			error_on_line(char const *graph_raw, char const *ptr)
 	size_t			line_number;
 	char const		*line;
 
+	if (!(g_flags & FLAG_VERBOSE))
+		return ;
 	line_number = 1;
 	while (graph_raw < ptr)
 	{
@@ -29,8 +31,7 @@ static void			error_on_line(char const *graph_raw, char const *ptr)
 		}
 		graph_raw++;
 	}
-	if (g_flags & FLAG_VERBOSE)
-		ft_printf("farm validation error on line %zu\n", line_number);
+	ft_printf("farm validation error on line %zu\n", line_number);
 	print_line("line:", line);
 }
 
@@ -48,7 +49,8 @@ static _Bool		validate_ant_count(char const **ptr)
 
 static _Bool		validate_room(char const *ptr)
 {
-	print_line("validating room: ", ptr);
+	if (g_flags & FLAG_VVERBOSE)
+		print_line("validating room: ", ptr);
 	if (*ptr == '#')
 	{
 		ptr = ft_strchr(ptr, '\n') + 1;
@@ -73,7 +75,8 @@ static _Bool		validate_room(char const *ptr)
 
 static _Bool		validate_link(char const *ptr)
 {
-	print_line("validating link: ", ptr);
+	if (g_flags & FLAG_VVERBOSE)
+		print_line("validating link: ", ptr);
 	if (*ptr == '#')
 	{
 		ptr = ft_strchr(ptr, '\n') + 1;

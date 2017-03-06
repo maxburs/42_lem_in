@@ -11,14 +11,13 @@
 /* ************************************************************************** */
 
 #include <libft.h>
-#include <stdbool.h>
 #include <lem_in.h>
 #include <string.h>
 #include <ft_printf.h>
 
 void			print_line(char const *title, char const *line)
 {
-	if ((g_flags & FLAG_VVERBOSE) == false)
+	if (!(g_flags & FLAG_VERBOSE))
 		return ;
 	ft_putstr(title);
 	while (*line != '\n' && *line != '\0')
@@ -44,7 +43,9 @@ void			print_graph(t_node *node)
 		return ;
 	while (node->name)
 	{
-		ft_printf("%16s: ", node->name);
+		if (node->property)
+			ft_printf("%0s##%s\n", "", node->property);
+		ft_printf("%12s: ", node->name);
 		//connections will be printed here
 		link = node->links;
 		while (link)
@@ -55,8 +56,6 @@ void			print_graph(t_node *node)
 				ft_putchar(',');
 			ft_putchar(' ');
 		}
-		if (node->property)
-			ft_printf("(%s)", node->property);
 		ft_putchar('\n');
 		node++;
 	}
