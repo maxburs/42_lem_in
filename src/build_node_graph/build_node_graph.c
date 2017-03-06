@@ -49,6 +49,10 @@ static size_t		get_node_count(const char *graph_raw)
 	return (node_count);
 }
 
+/*
+** also inits links to null
+*/
+
 static void			get_node_names(char *graph_raw, t_node *node_arr)
 {
 	char		*property;
@@ -56,7 +60,6 @@ static void			get_node_names(char *graph_raw, t_node *node_arr)
 	property = NULL;
 	while (true)
 	{
-		print_line("getting names: ", graph_raw);
 		if (graph_raw[0] == '#' && graph_raw[1] == '#' && !property)
 		{
 			graph_raw += 2;
@@ -77,14 +80,62 @@ static void			get_node_names(char *graph_raw, t_node *node_arr)
 		}
 		if ((graph_raw = ft_strchr(graph_raw, '\n')) == NULL)
 			break ;
-		ft_printf("hello\n");
 		graph_raw++;
 	}
 }
 
+static int				add_link(t_node *node_arr, char *name1, char *name2)
+{
+	t_node	*node1;
+	t_node	*node2;
+
+	node1 = NULL;
+	node2 = NULL;
+	while ((!node1 || !node2) && node_arr->name)
+	{
+		ft_printf("checking: %s\n", node_arr->name);
+		ft_printf("name1: %s\n", name1);
+		if (ft_strcmp(node_arr->name, name1) == 0)
+		{
+			node1 = node_arr;
+		}
+		//ft_putstr("test2\n");
+		if (ft_strcmp(node_arr->name, name2) == 0)
+		{
+			node2 = node_arr;
+		}
+		//ft_putstr("test\n");
+		node_arr++;
+	}
+	if (!node1 || !node2)
+	{
+		ft_printf("error with strings: %s & %s\n", name1, name2);
+		return (1);
+	}
+	ft_lstmadd_b(&(node1->links), node2);
+	ft_lstmadd_b(&(node2->links), node1);
+	return (0);
+}
+
+//static void			get_node_links(char *graph_raw, t_node *node_arr)
+//{
+//	if ((graph_raw = ft_strchr(graph_raw, '\n')) == NULL)
+//		break ;
+//	graph_raw++;
+//	while (true)
+//	{
+//		if (*graph_raw != '#' && !is_node(graph_raw))
+//		{
+//			
+//		}
+//		if ((graph_raw = ft_strchr(graph_raw, '\n')) == NULL)
+//			break ;
+//		graph_raw++;
+//	}
+//}
+
 int					build_node_graph(char *graph_raw, t_node **graph)
 {
-	//char	*ptr;
 	t_node		*node_arr;
 	size_t		node_count;
 
@@ -92,11 +143,15 @@ int					build_node_graph(char *graph_raw, t_node **graph)
 	ft_printf("node count: %zu\n", node_count);
 	if (!(node_arr = (t_node*)malloc(sizeof(t_node) * node_count)))
 		return (1);
-	ft_printf("test\n");
 	*graph = node_arr;
 	node_arr[node_count].name = NULL;
-	ft_printf("test\n");
 	get_node_names(graph_raw, node_arr);
-	ft_printf("hello\n");
+	add_link(node_arr, "4", "2");
+	add_link(node_arr, "4", "2");
+	add_link(node_arr, "4", "2");
+	add_link(node_arr, "4", "2");
+	add_link(node_arr, "4", "2");
+	add_link(node_arr, "4", "2");
+	add_link(node_arr, "0", "3");
 	return (0);
 }

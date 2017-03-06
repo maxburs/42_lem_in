@@ -38,10 +38,23 @@ char const		*line_end(char const *line)
 
 void			print_graph(t_node *node)
 {
+	t_listm		*link;
+
+	if (!(g_flags & FLAG_VERBOSE))
+		return ;
 	while (node->name)
 	{
 		ft_printf("%16s: ", node->name);
 		//connections will be printed here
+		link = node->links;
+		while (link)
+		{
+			ft_putstr(((t_node*)(link->content))->name);
+			link = link->next;
+			if (link)
+				ft_putchar(',');
+			ft_putchar(' ');
+		}
 		if (node->property)
 			ft_printf("(%s)", node->property);
 		ft_putchar('\n');
