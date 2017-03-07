@@ -67,8 +67,7 @@ static void			get_node_names(char *graph_raw, t_node *node_arr)
 		}
 		else if (is_node(graph_raw))
 		{
-			node_arr->name = ft_strndup(graph_raw,
-											ft_strchri(graph_raw, ' '));
+			node_arr->name = ft_strndup(graph_raw, ft_strchri(graph_raw, ' '));
 			if (property)
 			{
 				node_arr->property = property;
@@ -162,7 +161,5 @@ int					build_node_graph(char *graph_raw, t_node **graph)
 	node_arr[node_count].name = NULL;
 	get_node_names(graph_raw, node_arr);
 	get_node_links(graph_raw, node_arr);
-	//add_link(node_arr, "4", "2");
-	//add_link(node_arr, "0", "3");
 	return (0);
 }

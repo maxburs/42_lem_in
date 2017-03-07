@@ -46,6 +46,6 @@ int		main(int argc, char **argv)
 	print_graph(graph);
 	//organize_node_graph(&graph);
 	//move_ants(graph);
-	free(graph);
+	free_graph(graph);
 	return (0);
 }

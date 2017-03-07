@@ -33,6 +33,7 @@ typedef struct	s_node
 void			print_graph(t_node *node);
 void			print_line(char const *title, char const *line);
 char const		*line_end(char const *line);
+void			free_graph(t_node *graph);
 
 char			*get_raw_graph(void);
 int				validate_raw_graph(char *graph_raw);
