@@ -19,8 +19,10 @@ int		g_flags;
 
 int		main(int argc, char **argv)
 {
+	int		ants;
 	char	*graph_raw;
 	t_node	*graph;
+	//t_node	***paths;
 
 	g_flags = 0;
 	if (argc == 2 && ft_strcmp(argv[1], "-v") == 0)
@@ -38,14 +40,23 @@ int		main(int argc, char **argv)
 	ft_putstr("\n");
 	if (validate_raw_graph(graph_raw))
 	{
+		free(graph_raw);
 		ft_printf("ERROR\n");
 		return (0);
 	}
-	build_node_graph(graph_raw, &graph);
+	ants = ft_atoi(graph_raw);
+	ft_printf("ants: %d\n", ants);
+	if (build_node_graph(graph_raw, &graph))
+	{
+		ft_printf("ERROR\n");
+		free(graph_raw);
+		free_graph(graph);
+		return (0);
+	}
 	free(graph_raw);
 	print_graph(graph);
-	//organize_node_graph(&graph);
-	//move_ants(graph);
+	//paths = find_best_paths(&graph);
+	//move_ants(paths, ants);
 	free_graph(graph);
 	return (0);
 }

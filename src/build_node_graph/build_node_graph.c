@@ -160,6 +160,7 @@ int					build_node_graph(char *graph_raw, t_node **graph)
 	*graph = node_arr;
 	node_arr[node_count].name = NULL;
 	get_node_names(graph_raw, node_arr);
-	get_node_links(graph_raw, node_arr);
+	if (get_node_links(graph_raw, node_arr))
+		return (1);
 	return (0);
 }
