@@ -25,7 +25,7 @@ static void		free_links(t_listm *link)
 void			free_graph(t_node *graph)
 {
 	t_node	*graph_head;
-	
+
 	graph_head = graph;
 	while (graph->name)
 	{

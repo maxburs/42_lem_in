@@ -31,7 +31,7 @@ static _Bool		is_node(const char *spot)
 	if (space_count != 2)
 		return (false);
 	return (true);
-}		
+}
 
 static size_t		get_node_count(const char *graph_raw)
 {
@@ -68,13 +68,9 @@ static void			get_node_names(char *graph_raw, t_node *node_arr)
 		else if (is_node(graph_raw))
 		{
 			node_arr->name = ft_strndup(graph_raw, ft_strchri(graph_raw, ' '));
+			node_arr->property = property;
 			if (property)
-			{
-				node_arr->property = property;
 				property = NULL;
-			}
-			else
-				node_arr->property = NULL;
 			node_arr++;
 		}
 		if ((graph_raw = ft_strchr(graph_raw, '\n')) == NULL)
@@ -87,7 +83,7 @@ static void			get_node_names(char *graph_raw, t_node *node_arr)
 ** do a string and a line match
 */
 
-static _Bool			node_name_eql(char const *line, char const *str)
+static _Bool		node_name_eql(char const *line, char const *str)
 {
 	while (*line != '\0' && *str != '\0' && *line == *str)
 	{
@@ -99,7 +95,11 @@ static _Bool			node_name_eql(char const *line, char const *str)
 	return (0);
 }
 
-static int				add_link(t_node *node_arr, char *name1, char *name2)
+/*
+** given pointers to the names of two nodes on the graph link them together
+*/
+
+static int			add_link(t_node *node_arr, char *name1, char *name2)
 {
 	t_node	*node1;
 	t_node	*node2;
@@ -155,7 +155,7 @@ int					build_node_graph(char *graph_raw, t_node **graph)
 	size_t		node_count;
 
 	node_count = get_node_count(graph_raw);
-	if (!(node_arr = (t_node*)malloc(sizeof(t_node) * node_count)))
+	if (!(node_arr = (t_node*)malloc(sizeof(t_node) * (node_count + 1))))
 		return (1);
 	*graph = node_arr;
 	node_arr[node_count].name = NULL;
