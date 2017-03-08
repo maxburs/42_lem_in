@@ -16,9 +16,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include <ft_printf.h>
-
-static _Bool		is_node(const char *spot)
+_Bool				is_node(const char *spot)
 {
 	int		space_count;
 
@@ -33,7 +31,7 @@ static _Bool		is_node(const char *spot)
 	return (true);
 }
 
-static size_t		get_node_count(const char *graph_raw)
+static size_t		get_node_count(char const *graph_raw)
 {
 	size_t		node_count;
 
@@ -49,11 +47,24 @@ static size_t		get_node_count(const char *graph_raw)
 	return (node_count);
 }
 
+static _Bool		is_name_duplicate(t_node *node_arr, char const *line)
+{
+	while (node_arr->name)
+	{
+		if (node_name_eql(line, node_arr->name))
+		{
+			print_line("duplicate name: ", line);
+			return (true);
+		}
+	}
+	return (false);
+}
+
 /*
 ** also inits links to null
 */
 
-static void			get_node_names(char *graph_raw, t_node *node_arr)
+static int			add_node_names(char *graph_raw, t_node *node_arr)
 {
 	char		*property;
 
@@ -67,6 +78,8 @@ static void			get_node_names(char *graph_raw, t_node *node_arr)
 		}
 		else if (is_node(graph_raw))
 		{
+			if (is_name_duplicate(node_arr, graph_raw))
+				return (1);
 			node_arr->name = ft_strndup(graph_raw, ft_strchri(graph_raw, ' '));
 			node_arr->property = property;
 			if (property)
@@ -77,79 +90,10 @@ static void			get_node_names(char *graph_raw, t_node *node_arr)
 			break ;
 		graph_raw++;
 	}
-}
-
-/*
-** do a string and a line match
-*/
-
-static _Bool		node_name_eql(char const *line, char const *str)
-{
-	while (*line != '\0' && *str != '\0' && *line == *str)
-	{
-		line++;
-		str++;
-	}
-	if ((*line == '\0' || *line == '\n' || *line == '-') && *str == '\0')
-		return (1);
 	return (0);
 }
 
-/*
-** given pointers to the names of two nodes on the graph link them together
-*/
-
-static int			add_link(t_node *node_arr, char *name1, char *name2)
-{
-	t_node	*node1;
-	t_node	*node2;
-
-	node1 = NULL;
-	node2 = NULL;
-	while ((!node1 || !node2) && node_arr->name)
-	{
-		if (node_name_eql(name1, node_arr->name))
-		{
-			node1 = node_arr;
-		}
-		if (node_name_eql(name2, node_arr->name))
-		{
-			node2 = node_arr;
-		}
-		node_arr++;
-	}
-	if (!node1 || !node2)
-	{
-		return (1);
-	}
-	ft_lstmadd_b(&(node1->links), node2);
-	ft_lstmadd_b(&(node2->links), node1);
-	return (0);
-}
-
-static int			get_node_links(char *graph_raw, t_node *node_arr)
-{
-	if ((graph_raw = ft_strchr(graph_raw, '\n')) == NULL)
-		return (0);
-	graph_raw++;
-	while (true)
-	{
-		if (*graph_raw != '#' && !is_node(graph_raw))
-		{
-			if (add_link(node_arr, graph_raw, ft_strchr(graph_raw, '-') + 1))
-			{
-				print_line("error adding link: ", graph_raw);
-				return (1);
-			}
-		}
-		if ((graph_raw = ft_strchr(graph_raw, '\n')) == NULL)
-			break ;
-		graph_raw++;
-	}
-	return (0);
-}
-
-int					build_node_graph(char *graph_raw, t_node **graph)
+int					build_graph(char *graph_raw, t_node **graph)
 {
 	t_node		*node_arr;
 	size_t		node_count;
@@ -157,10 +101,11 @@ int					build_node_graph(char *graph_raw, t_node **graph)
 	node_count = get_node_count(graph_raw);
 	if (!(node_arr = (t_node*)malloc(sizeof(t_node) * (node_count + 1))))
 		return (1);
+	ft_bzero(node_arr, sizeof(t_node) * (node_count + 1));
 	*graph = node_arr;
 	node_arr[node_count].name = NULL;
-	get_node_names(graph_raw, node_arr);
-	if (get_node_links(graph_raw, node_arr))
+	if (add_node_names(graph_raw, node_arr)
+		|| add_node_links(graph_raw, node_arr))
 		return (1);
 	return (0);
 }

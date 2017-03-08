@@ -35,8 +35,16 @@ void			print_line(char const *title, char const *line);
 char const		*line_end(char const *line);
 void			free_graph(t_node *graph);
 
+
+/*
+** ./build_graph/
+*/
+
+int				build_graph(char *graph_raw, t_node **graph);
 char			*get_raw_graph(void);
 int				validate_raw_graph(char *graph_raw);
-int				build_node_graph(char *graph_raw, t_node **graph);
+_Bool			is_node(const char *spot);
+int				add_node_links(char *graph_raw, t_node *node_arr);
+_Bool			node_name_eql(char const *line, char const *str);
 
 #endif

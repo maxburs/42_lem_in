@@ -46,7 +46,7 @@ int		main(int argc, char **argv)
 	}
 	ants = ft_atoi(graph_raw);
 	ft_printf("ants: %d\n", ants);
-	if (build_node_graph(graph_raw, &graph))
+	if (build_graph(graph_raw, &graph))
 	{
 		ft_printf("ERROR\n");
 		free(graph_raw);
