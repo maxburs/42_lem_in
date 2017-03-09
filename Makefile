@@ -26,6 +26,9 @@ SRC = \
 			get_raw_graph.c \
 			validate_raw_graph.c \
 		) \
+		$(addprefix find_best_paths/, \
+			find_best_paths.c \
+		) \
 	)
 
 OBJ = $(SRC:.c=.o)

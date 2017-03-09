@@ -59,3 +59,25 @@ void			print_graph(t_node *node)
 		node++;
 	}
 }
+
+void			print_paths(t_listm *paths)
+{
+	t_node	*path;
+
+	if (!(g_flags & FLAG_VERBOSE))
+		return ;
+	while (paths)
+	{
+		path = paths->content;
+		while (path)
+		{
+			ft_putstr(path->name);
+			path++;
+			if (path)
+				ft_putstr(" -> ");
+		}
+		ft_putchar('\n');
+		paths = paths->next;
+	}
+}
+

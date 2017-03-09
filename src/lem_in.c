@@ -17,13 +17,22 @@
 
 int		g_flags;
 
-int		main(int argc, char **argv)
+void	error(char *graph_raw, t_node **graph, t_listm *paths)
 {
-	int		ants;
-	char	*graph_raw;
-	t_node	*graph;
-	//t_node	***paths;
+	ft_printf("ERROR\n");
+	if (graph_raw)
+		free(graph_raw);
+	if (graph)
+		free_graph(graph);
+	//todo: make free paths
+	//if (paths)
+	//	free_paths(paths);
+	UNUSED(&paths);
+	exit(0);
+}
 
+int		set_flags(int argc, char **argv)
+{
 	g_flags = 0;
 	if (argc == 2 && ft_strcmp(argv[1], "-v") == 0)
 		g_flags += FLAG_VERBOSE;
@@ -32,31 +41,37 @@ int		main(int argc, char **argv)
 	else if (argc != 1)
 	{
 		ft_putstr_fd("Bad Argument\n", 2);
-		return (0);
+		return (1);
 	}
+	return (0);
+}
+
+int		main(int argc, char **argv)
+{
+	int		ants;
+	char	*graph_raw;
+	t_node	*graph;
+	t_listm	*paths;
+
+	graph_raw = NULL;
+	graph = NULL;
+	paths = NULL;
+	if (set_flags(argc, argv))
+		error(graph_raw, &graph, paths);
 
 	graph_raw = get_raw_graph();
-	ft_putstr(graph_raw);
-	ft_putstr("\n");
+	ft_putendl(graph_raw);
 	if (validate_raw_graph(graph_raw))
-	{
-		free(graph_raw);
-		ft_printf("ERROR\n");
-		return (0);
-	}
+		error(graph_raw, &graph, paths);
 	ants = ft_atoi(graph_raw);
-	ft_printf("ants: %d\n", ants);
 	if (build_graph(graph_raw, &graph))
-	{
-		ft_printf("ERROR\n");
-		free(graph_raw);
-		free_graph(graph);
-		return (0);
-	}
-	free(graph_raw);
+		error(graph_raw, &graph, paths);
+	ft_strdel(&graph_raw);
 	print_graph(graph);
-	//paths = find_best_paths(&graph);
+	if (find_best_paths(graph, &paths))
+		error(graph_raw, &graph, paths);
+	print_paths(paths);
 	//move_ants(paths, ants);
-	free_graph(graph);
+	free_graph(&graph);
 	return (0);
 }

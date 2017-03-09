@@ -1,39 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helper.c                                           :+:      :+:    :+:   */
+/*   lem-in.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mburson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/04 18:52:02 by mburson           #+#    #+#             */
-/*   Updated: 2017/03/04 18:52:04 by mburson          ###   ########.fr       */
+/*   Created: 2017/02/23 19:31:34 by mburson           #+#    #+#             */
+/*   Updated: 2017/02/23 19:31:35 by mburson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <lem_in.h>
 #include <libft.h>
 
-static void		free_links(t_listm *link)
+t_node	*node_with_property(t_node *graph, char const *property)
 {
-	if (!link)
-		return ;
-	free_links(link->next);
-	free(link);
-}
-
-void			free_graph(t_node **graph_head)
-{
-	t_node	*graph;
-
-	graph = *graph_head;
 	while (graph->name)
 	{
-		free(graph->name);
-		free(graph->property);
-		free_links(graph->links);
+		if (graph->propety && ft_strcmp(graph->property, property) == 0)
+			return (graph);
 		graph++;
 	}
-	free(*graph_head);
-	*graph_head = NULL;
+	return (NULL);
+}
+
+int		find_best_paths(t_node *graph, t_listm **paths_return)
+{
+	t_listm	*paths;
+	t_node	*start;
+	t_node	*end;
+
+	start = node_with_property(graph, "start");
+	end = node_with_property(graph, "end");
+	ft_printf("start: %s\n", start->name);
+	ft_printf("end: %s\n", end->name);
+	*paths_return = paths;
 }

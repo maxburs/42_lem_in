@@ -22,6 +22,8 @@ extern int		g_flags;
 # define BUFF_SIZE 64
 # define ROOM_NAME_EXCLUDES " \n-"
 
+# define UNUSED(x) (void)(x)
+
 typedef struct	s_node
 {
 	char	*name;
@@ -30,10 +32,11 @@ typedef struct	s_node
 	int		path;
 }				t_node;
 
-void			print_graph(t_node *node);
+void			print_paths(t_listm *paths);
 void			print_line(char const *title, char const *line);
 char const		*line_end(char const *line);
-void			free_graph(t_node *graph);
+void			free_graph(t_node **graph_head);
+void			print_graph(t_node *node);
 
 
 /*
@@ -46,5 +49,11 @@ int				validate_raw_graph(char *graph_raw);
 _Bool			is_node(const char *spot);
 int				add_node_links(char *graph_raw, t_node *node_arr);
 _Bool			node_name_eql(char const *line, char const *str);
+
+/*
+** ./find_best_paths/
+*/
+
+int		find_best_paths(t_node *graph, t_listm **paths_return);
 
 #endif
