@@ -20,6 +20,8 @@ SRC = \
 		free.c \
 		helper.c \
 		lem_in.c \
+		move_ants.c \
+		node_distances.c \
 		$(addprefix build_graph/, \
 			add_node_links.c \
 			build_graph.c \
@@ -28,7 +30,6 @@ SRC = \
 		) \
 		$(addprefix find_best_paths/, \
 			find_best_paths.c \
-			simple_shortest.c \
 		) \
 	)
 

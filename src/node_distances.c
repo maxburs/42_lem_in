@@ -14,7 +14,16 @@
 #include <limits.h>
 #include <string.h>
 
-void			calc_node_distances(t_node *node, int distance)
+void	set_nodes_distances(t_node *graph, int distance)
+{
+	while (graph->name)
+	{
+		graph->distance = distance;
+		graph++;
+	}
+}
+
+void	calc_node_distances(t_node *node, int distance)
 {
 	t_listm		*link;
 

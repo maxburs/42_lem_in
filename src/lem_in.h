@@ -37,6 +37,7 @@ void			print_line(char const *title, char const *line);
 char const		*line_end(char const *line);
 void			free_graph(t_node **graph_head);
 void			print_graph(t_node *node);
+int				move_ants(t_node *graph, int ants);
 
 
 /*

@@ -24,28 +24,3 @@ t_node	*node_with_property(t_node *graph, char const *property)
 	}
 	return (NULL);
 }
-
-void	set_nodes_distances(t_node *graph, int distance)
-{
-	while (graph->name)
-	{
-		graph->distance = distance;
-		graph++;
-	}
-}
-
-int		find_best_paths(t_node *graph, int ants,  t_listm **paths_return)
-{
-	t_listm	*paths;
-	t_node	*start;
-	t_node	*end;
-
-	paths = NULL;
-	start = node_with_property(graph, "start");
-	end = node_with_property(graph, "end");
-	ft_printf("start: %s\n", start->name);
-	ft_printf("end: %s\n", end->name);
-	*paths_return = paths;
-	UNUSED(ants);
-	return (0);
-}

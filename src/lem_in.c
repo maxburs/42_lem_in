@@ -45,7 +45,7 @@ int		set_flags(int argc, char **argv)
 
 int		main(int argc, char **argv)
 {
-	//int		ants;
+	int		ants;
 	char	*graph_raw;
 	t_node	*graph;
 
@@ -58,7 +58,7 @@ int		main(int argc, char **argv)
 	ft_putendl(graph_raw);
 	if (validate_raw_graph(graph_raw))
 		error(graph_raw, &graph);
-	//ants = ft_atoi(graph_raw);
+	ants = ft_atoi(graph_raw);
 	if (build_graph(graph_raw, &graph))
 		error(graph_raw, &graph);
 	ft_strdel(&graph_raw);
@@ -66,7 +66,7 @@ int		main(int argc, char **argv)
 	calc_node_distances(node_with_property(graph, "end"), 0);
 	print_graph(graph);
 	//if (find_best_paths(graph, ants, &paths))
-	//move_ants(paths, ants);
+	move_ants(graph, ants);
 	free_graph(&graph);
 	return (0);
 }
