@@ -48,7 +48,7 @@ int		set_flags(int argc, char **argv)
 
 int		main(int argc, char **argv)
 {
-	int		ants;
+	//int		ants;
 	char	*graph_raw;
 	t_node	*graph;
 	t_listm	*paths;
@@ -63,14 +63,17 @@ int		main(int argc, char **argv)
 	ft_putendl(graph_raw);
 	if (validate_raw_graph(graph_raw))
 		error(graph_raw, &graph, paths);
-	ants = ft_atoi(graph_raw);
+	//ants = ft_atoi(graph_raw);
 	if (build_graph(graph_raw, &graph))
 		error(graph_raw, &graph, paths);
 	ft_strdel(&graph_raw);
+	set_nodes_paths(graph, 0);
 	print_graph(graph);
-	if (find_best_paths(graph, &paths))
+	//if (find_best_paths(graph, ants, &paths))
+	if (simple_shortest(graph, &paths))
 		error(graph_raw, &graph, paths);
 	print_paths(paths);
+	print_graph(graph);
 	//move_ants(paths, ants);
 	free_graph(&graph);
 	return (0);

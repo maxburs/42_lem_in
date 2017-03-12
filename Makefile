@@ -28,6 +28,7 @@ SRC = \
 		) \
 		$(addprefix find_best_paths/, \
 			find_best_paths.c \
+			simple_shortest.c \
 		) \
 	)
 

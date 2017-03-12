@@ -11,41 +11,32 @@
 /* ************************************************************************** */
 
 #include <lem_in.h>
-#include <libft.h>
-#include <ft_printf.h>
+#include <limits.h>
+#include <string.h>
 
-t_node	*node_with_property(t_node *graph, char const *property)
+static void		set_paths_to_distance(t_node *node, int distance)
 {
-	while (graph->name)
-	{
-		if (graph->property && ft_strcmp(graph->property, (char*)property) == 0)
-			return (graph);
-		graph++;
-	}
-	return (NULL);
-}
+	t_listm		*link;
 
-void	set_nodes_paths(t_node *graph, int path)
-{
-	while (graph->name)
+	if (distance >= node->path)
+		return ;
+	node->path = distance;
+	distance++;
+	link = node->links;
+	while (link)
 	{
-		graph->path = path;
-		graph++;
+		set_paths_to_distance(link->content, distance);
+		link = link->next;
 	}
 }
 
-int		find_best_paths(t_node *graph, int ants,  t_listm **paths_return)
+int				simple_shortest(t_node *graph, t_listm **paths_return)
 {
-	t_listm	*paths;
-	t_node	*start;
-	t_node	*end;
+	t_listm		*path;
 
-	paths = NULL;
-	start = node_with_property(graph, "start");
-	end = node_with_property(graph, "end");
-	ft_printf("start: %s\n", start->name);
-	ft_printf("end: %s\n", end->name);
-	*paths_return = paths;
-	UNUSED(ants);
+	path = NULL;
+	set_nodes_paths(graph, INT_MAX);
+	set_paths_to_distance(node_with_property(graph, "end"), 0);
+	*paths_return = path;
 	return (0);
 }

@@ -55,6 +55,7 @@ void			print_graph(t_node *node)
 				ft_putchar(',');
 			ft_putchar(' ');
 		}
+		ft_printf(" (%d)", node->path);
 		ft_putchar('\n');
 		node++;
 	}

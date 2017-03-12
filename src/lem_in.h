@@ -30,6 +30,7 @@ typedef struct	s_node
 	char	*property;
 	t_listm	*links;
 	int		path;
+	int		ant;
 }				t_node;
 
 void			print_paths(t_listm *paths);
@@ -54,6 +55,10 @@ _Bool			node_name_eql(char const *line, char const *str);
 ** ./find_best_paths/
 */
 
-int		find_best_paths(t_node *graph, t_listm **paths_return);
+int				find_best_paths(t_node *graph, int ants,
+													t_listm **paths_return);
+int				simple_shortest(t_node *graph, t_listm **paths_return);
+t_node			*node_with_property(t_node *graph, char const *property);
+void			set_nodes_paths(t_node *graph, int path);
 
 #endif
