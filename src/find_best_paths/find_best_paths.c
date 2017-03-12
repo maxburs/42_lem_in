@@ -25,11 +25,11 @@ t_node	*node_with_property(t_node *graph, char const *property)
 	return (NULL);
 }
 
-void	set_nodes_paths(t_node *graph, int path)
+void	set_nodes_distances(t_node *graph, int distance)
 {
 	while (graph->name)
 	{
-		graph->path = path;
+		graph->distance = distance;
 		graph++;
 	}
 }

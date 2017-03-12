@@ -14,29 +14,18 @@
 #include <limits.h>
 #include <string.h>
 
-static void		set_paths_to_distance(t_node *node, int distance)
+void			calc_node_distances(t_node *node, int distance)
 {
 	t_listm		*link;
 
-	if (distance >= node->path)
+	if (distance >= node->distance)
 		return ;
-	node->path = distance;
+	node->distance = distance;
 	distance++;
 	link = node->links;
 	while (link)
 	{
-		set_paths_to_distance(link->content, distance);
+		calc_node_distances(link->content, distance);
 		link = link->next;
 	}
-}
-
-int				simple_shortest(t_node *graph, t_listm **paths_return)
-{
-	t_listm		*path;
-
-	path = NULL;
-	set_nodes_paths(graph, INT_MAX);
-	set_paths_to_distance(node_with_property(graph, "end"), 0);
-	*paths_return = path;
-	return (0);
 }

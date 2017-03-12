@@ -14,20 +14,17 @@
 #include <ft_printf.h>
 #include <lem_in.h>
 #include <stdlib.h>
+#include <limits.h>
 
 int		g_flags;
 
-void	error(char *graph_raw, t_node **graph, t_listm *paths)
+void	error(char *graph_raw, t_node **graph)
 {
 	ft_printf("ERROR\n");
 	if (graph_raw)
 		free(graph_raw);
 	if (graph)
 		free_graph(graph);
-	//todo: make free paths
-	//if (paths)
-	//	free_paths(paths);
-	UNUSED(&paths);
 	exit(0);
 }
 
@@ -51,29 +48,24 @@ int		main(int argc, char **argv)
 	//int		ants;
 	char	*graph_raw;
 	t_node	*graph;
-	t_listm	*paths;
 
 	graph_raw = NULL;
 	graph = NULL;
-	paths = NULL;
 	if (set_flags(argc, argv))
-		error(graph_raw, &graph, paths);
+		error(graph_raw, &graph);
 
 	graph_raw = get_raw_graph();
 	ft_putendl(graph_raw);
 	if (validate_raw_graph(graph_raw))
-		error(graph_raw, &graph, paths);
+		error(graph_raw, &graph);
 	//ants = ft_atoi(graph_raw);
 	if (build_graph(graph_raw, &graph))
-		error(graph_raw, &graph, paths);
+		error(graph_raw, &graph);
 	ft_strdel(&graph_raw);
-	set_nodes_paths(graph, 0);
+	set_nodes_distances(graph, INT_MAX);
+	calc_node_distances(node_with_property(graph, "end"), 0);
 	print_graph(graph);
 	//if (find_best_paths(graph, ants, &paths))
-	if (simple_shortest(graph, &paths))
-		error(graph_raw, &graph, paths);
-	print_paths(paths);
-	print_graph(graph);
 	//move_ants(paths, ants);
 	free_graph(&graph);
 	return (0);
