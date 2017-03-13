@@ -10,35 +10,54 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-#include <lem_in.h>
-#include <string.h>
 #include <ft_printf.h>
+#include <lem_in.h>
+#include <libft.h>
 
-/*
-** finds the first node with the specified property
-*/
-
-t_node			*node_with_property(t_node *graph, char const *property)
+void			print_line(char const *title, char const *line)
 {
-	while (graph->name)
+	if (!(g_flags & FLAG_VERBOSE))
+		return ;
+	ft_putstr(title);
+	while (*line != '\n' && *line != '\0')
 	{
-		if (graph->property && ft_strcmp(graph->property, (char*)property) == 0)
-			return (graph);
-		graph++;
+		ft_putchar(*line);
+		line++;
 	}
-	if (g_flags & FLAG_VERBOSE)
-		ft_printf("could not find node with property: %s\n", property);
-	return (NULL);
+	ft_putchar('\n');
 }
 
-/*
-** finds the end of the line
-*/
-
-char const		*line_end(char const *line)
+void			print_graph(t_node *node)
 {
-	while (*line != '\n' && *line != '\0')
-		line++;
-	return (line);
+	t_listm		*link;
+
+	if (!(g_flags & FLAG_VERBOSE))
+		return ;
+	ft_putstr("\e[33;1mbuilt graph:\e[0m\n\n");
+	while (node->name)
+	{
+		if (node->property)
+			ft_printf("   %0s##%s\n", "", node->property);
+		ft_printf("   %-8s ", node->name);
+		link = node->links;
+		while (link)
+		{
+			ft_putstr(((t_node*)(link->content))->name);
+			link = link->next;
+			if (link)
+				ft_putchar(',');
+			ft_putchar(' ');
+		}
+		ft_printf(" (%d)", node->distance);
+		ft_putchar('\n');
+		node++;
+	}
+	ft_putchar('\n');
+}
+
+void	putverbose(char const *str)
+{
+	if (!(g_flags & FLAG_VERBOSE))
+		return ;
+	ft_putstr(str);
 }

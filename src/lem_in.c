@@ -23,8 +23,7 @@ void	error(char *graph_raw, t_node **graph)
 	ft_printf("ERROR\n");
 	if (graph_raw)
 		free(graph_raw);
-	if (graph)
-		free_graph(graph);
+	free_graph(graph);
 	exit(0);
 }
 
@@ -43,6 +42,15 @@ int		set_flags(int argc, char **argv)
 	return (0);
 }
 
+int		graph_doesnt_connect(t_node *graph)
+{
+	if (node_with_property(graph, "start")->distance != INT_MAX)
+		return (0);
+	if (g_flags & FLAG_VERBOSE)
+		ft_putstr("graph doesn't connect\n");
+	return (1);
+}
+
 int		main(int argc, char **argv)
 {
 	int		ants;
@@ -53,20 +61,21 @@ int		main(int argc, char **argv)
 	graph = NULL;
 	if (set_flags(argc, argv))
 		error(graph_raw, &graph);
-
 	graph_raw = get_raw_graph();
-	ft_putendl(graph_raw);
+	putverbose("\n\e[33;1mraw input:\e[0m\n\n");
+	ft_printf("%s\n\n", graph_raw);
 	if (validate_raw_graph(graph_raw))
 		error(graph_raw, &graph);
 	ants = ft_atoi(graph_raw);
 	if (build_graph(graph_raw, &graph))
 		error(graph_raw, &graph);
 	ft_strdel(&graph_raw);
-	set_nodes_distances(graph, INT_MAX);
-	calc_node_distances(node_with_property(graph, "end"), 0);
+	calc_node_distances(graph);
+	if (graph_doesnt_connect(graph))
+		error(graph_raw, &graph);
 	print_graph(graph);
-	//if (find_best_paths(graph, ants, &paths))
-	move_ants(graph, ants);
+	if (move_ants(graph, ants))
+		error(graph_raw, &graph);
 	free_graph(&graph);
 	return (0);
 }

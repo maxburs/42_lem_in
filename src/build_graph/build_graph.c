@@ -98,7 +98,12 @@ int					build_graph(char *graph_raw, t_node **graph)
 	t_node		*node_arr;
 	size_t		node_count;
 
-	node_count = get_node_count(graph_raw);
+	if (!(node_count = get_node_count(graph_raw)))
+	{
+		if (g_flags & FLAG_VERBOSE)
+			ft_putstr("no rooms found\n");
+		return (1);
+	}
 	if (!(node_arr = (t_node*)malloc(sizeof(t_node) * (node_count + 1))))
 		return (1);
 	ft_bzero(node_arr, sizeof(t_node) * (node_count + 1));

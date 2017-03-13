@@ -12,72 +12,8 @@
 
 #include <lem_in.h>
 #include <ft_printf.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <libft.h>
-
-static size_t	get_node_count(t_node *graph)
-{
-	size_t	count;
-
-	count = 0;
-	while (graph->name)
-	{
-		count++;
-		graph++;
-	}
-	return (count);
-}
-
-static int		*build_init_order(size_t size)
-{
-	int		*order;
-
-	if (!(order = (int*)malloc(sizeof(int) * (size + 1))))
-		return (NULL);
-	order[size] = -1;
-	while (size)
-	{
-		size--;
-		order[size] = size;
-	}
-	return (order);
-}
-
-int				*graph_order(t_node *graph)
-{
-	int		swap;
-	_Bool	change_made;
-	int		*order;
-	size_t	i;
-
-	if (!(order = build_init_order(get_node_count(graph))))
-		return (NULL);
-	change_made = true;
-	while (change_made)
-	{
-		change_made = false;
-		i = 0;
-		while (order[i + 1] != -1)
-		{
-			if (graph[order[i]].distance > graph[order[i + 1]].distance)
-			{
-				swap = order[i];
-				order[i] = order[i + 1];
-				order[i + 1] = swap;
-				change_made = true;
-			}
-			i++;
-		}
-	}
-	i = 0;
-	while (order[i] != -1)
-	{
-		ft_printf("%d: %s\n", i, graph[order[i]].name);
-		i++;
-	}
-	return (order);
-}
 
 static void		accept_ant(t_node *node)
 {
@@ -117,38 +53,42 @@ static void		accept_ants_to_end(t_node *node, int *ants_received)
 	}
 }
 
+static int		init_state(t_node *graph, t_state *state)
+{
+	if (!(state->start = node_with_property(graph, "start"))
+		|| !(state->end = node_with_property(graph, "end"))
+		|| !(state->order = graph_order(graph)))
+		return (1);
+	state->ants_received = 0;
+	state->ants_deployed = 1;
+	state->start->ant = 1;
+	return (0);
+}
+
 int				move_ants(t_node *graph, int ants)
 {
-	int		*order;
-	int		ants_deployed;
-	int		ants_received;
-	t_node	*start;
-	t_node	*end;
-	size_t	i;
+	t_state		state;
+	size_t		i;
 
-	start = node_with_property(graph, "start");
-	end = node_with_property(graph, "end");
-	ants_received = 0;
-	ants_deployed = 1;
-	start->ant = ants_deployed;
-	if (!(order = graph_order(graph)))
+	if (init_state(graph, &state))
 		return (1);
-	while (ants_received < ants)
+	putverbose("\e[33;1mmoves:\n\n\e[0m");
+	while (state.ants_received < ants)
 	{
 		i = 1;
-		accept_ants_to_end(end, &ants_received);
-		while (order[i] != -1)
+		accept_ants_to_end(state.end, &state.ants_received);
+		while (state.order[i] != -1)
 		{
-			accept_ant(graph + order[i]);
-			if (start->ant == 0 && ants_deployed < ants)
+			accept_ant(graph + state.order[i]);
+			if (state.start->ant == 0 && state.ants_deployed < ants)
 			{
-				ants_deployed++;
-				start->ant = ants_deployed;
+				state.ants_deployed++;
+				state.start->ant = state.ants_deployed;
 			}
 			i++;
 		}
 		ft_putchar('\n');
-		//ft_printf("ants received: %d\n", ants_received);
 	}
+	free(state.order);
 	return (0);
 }

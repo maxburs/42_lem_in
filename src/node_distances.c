@@ -14,7 +14,7 @@
 #include <limits.h>
 #include <string.h>
 
-void	set_nodes_distances(t_node *graph, int distance)
+static void		set_nodes_distances(t_node *graph, int distance)
 {
 	while (graph->name)
 	{
@@ -23,7 +23,8 @@ void	set_nodes_distances(t_node *graph, int distance)
 	}
 }
 
-void	calc_node_distances(t_node *node, int distance)
+
+static void		recurse_me(t_node *node, int distance)
 {
 	t_listm		*link;
 
@@ -34,7 +35,14 @@ void	calc_node_distances(t_node *node, int distance)
 	link = node->links;
 	while (link)
 	{
-		calc_node_distances(link->content, distance);
+		recurse_me(link->content, distance);
 		link = link->next;
 	}
+}
+
+
+void			calc_node_distances(t_node *graph)
+{
+	set_nodes_distances(graph, INT_MAX);
+	recurse_me(node_with_property(graph, "end"), 0);
 }

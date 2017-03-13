@@ -26,6 +26,8 @@ void			free_graph(t_node **graph_head)
 {
 	t_node	*graph;
 
+	if (!*graph_head)
+		return ;
 	graph = *graph_head;
 	while (graph->name)
 	{

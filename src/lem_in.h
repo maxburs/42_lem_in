@@ -33,12 +33,19 @@ typedef struct	s_node
 	int		ant;
 }				t_node;
 
-void			print_line(char const *title, char const *line);
+typedef struct	s_state
+{
+	int		*order;
+	int		ants_deployed;
+	int		ants_received;
+	t_node	*start;
+	t_node	*end;
+}				t_state;
+
 char const		*line_end(char const *line);
 void			free_graph(t_node **graph_head);
-void			print_graph(t_node *node);
 int				move_ants(t_node *graph, int ants);
-
+int				*graph_order(t_node *graph);
 
 /*
 ** ./build_graph/
@@ -51,14 +58,21 @@ _Bool			is_node(const char *spot);
 int				add_node_links(char *graph_raw, t_node *node_arr);
 _Bool			node_name_eql(char const *line, char const *str);
 
+void			calc_node_distances(t_node *graph);
+
 /*
-** ./find_best_paths/
+** ./helper.c
 */
 
-int				find_best_paths(t_node *graph, int ants,
-													t_listm **paths_return);
 t_node			*node_with_property(t_node *graph, char const *property);
-void			set_nodes_distances(t_node *graph, int path);
-void			calc_node_distances(t_node *node, int distance);
+
+/*
+** ./verbose.c
+*/
+
+void			print_line(char const *title, char const *line);
+void			print_graph(t_node *node);
+void			putverbose(char const *str);
+
 
 #endif

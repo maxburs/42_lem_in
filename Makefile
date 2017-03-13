@@ -18,18 +18,17 @@ LIBFTPRINTF_DIR = ./src/ft_printf
 SRC = \
 	$(addprefix ./src/, \
 		free.c \
+		graph_order_shim.c \
 		helper.c \
 		lem_in.c \
 		move_ants.c \
 		node_distances.c \
+		verbose.c \
 		$(addprefix build_graph/, \
 			add_node_links.c \
 			build_graph.c \
 			get_raw_graph.c \
 			validate_raw_graph.c \
-		) \
-		$(addprefix find_best_paths/, \
-			find_best_paths.c \
 		) \
 	)
 
