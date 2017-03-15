@@ -19,7 +19,7 @@
 ** do a string and a line match
 */
 
-_Bool				node_name_eql(char const *line, char const *str)
+_Bool			node_name_eql(char const *line, char const *str)
 {
 	while (*line != '\0' && *str != '\0' && *line == *str)
 	{
@@ -35,7 +35,7 @@ _Bool				node_name_eql(char const *line, char const *str)
 ** given pointers to the names of two nodes on the graph link them together
 */
 
-static int			add_link(t_node *node_arr, char *name1, char *name2)
+static int		add_link(t_node *node_arr, char *name1, char *name2)
 {
 	t_node	*node1;
 	t_node	*node2;

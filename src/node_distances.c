@@ -23,7 +23,6 @@ static void		set_nodes_distances(t_node *graph, int distance)
 	}
 }
 
-
 static void		recurse_me(t_node *node, int distance)
 {
 	t_listm		*link;
@@ -39,7 +38,6 @@ static void		recurse_me(t_node *node, int distance)
 		link = link->next;
 	}
 }
-
 
 void			calc_node_distances(t_node *graph)
 {

@@ -74,5 +74,4 @@ void			print_line(char const *title, char const *line);
 void			print_graph(t_node *node);
 void			putverbose(char const *str);
 
-
 #endif

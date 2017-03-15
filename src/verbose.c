@@ -14,7 +14,7 @@
 #include <lem_in.h>
 #include <libft.h>
 
-void			print_line(char const *title, char const *line)
+void	print_line(char const *title, char const *line)
 {
 	if (!(g_flags & FLAG_VERBOSE))
 		return ;
@@ -27,7 +27,7 @@ void			print_line(char const *title, char const *line)
 	ft_putchar('\n');
 }
 
-void			print_graph(t_node *node)
+void	print_graph(t_node *node)
 {
 	t_listm		*link;
 

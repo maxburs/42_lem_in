@@ -60,9 +60,17 @@ static void		print_shim(t_node *graph, int *shim)
 	ft_putchar('\n');
 }
 
-int				*graph_order(t_node *graph)
+static void		swap_next_values(int *order)
 {
 	int		swap;
+
+	swap = order[0];
+	order[0] = order[1];
+	order[1] = swap;
+}
+
+int				*graph_order(t_node *graph)
+{
 	_Bool	change_made;
 	int		*order;
 	size_t	i;
@@ -78,9 +86,7 @@ int				*graph_order(t_node *graph)
 		{
 			if (graph[order[i]].distance > graph[order[i + 1]].distance)
 			{
-				swap = order[i];
-				order[i] = order[i + 1];
-				order[i + 1] = swap;
+				swap_next_values(order + i);
 				change_made = true;
 			}
 			i++;
