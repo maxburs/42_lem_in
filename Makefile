@@ -47,7 +47,6 @@ $(NAME): $(OBJ) $(LIBFTPRINTF)
 	gcc $(CFLAGS) $(HEADERS) -c -o $@ $<
 
 $(LIBFTPRINTF): force
-	@echo "\e[1mbuilding libftprintf\e[0m"
 	cd $(LIBFTPRINTF_DIR) && $(MAKE)
 
 force:
