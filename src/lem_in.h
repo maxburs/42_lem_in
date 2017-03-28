@@ -54,7 +54,6 @@ int				*graph_order(t_node *graph);
 int				build_graph(char *graph_raw, t_node **graph);
 char			*get_raw_graph(void);
 int				validate_raw_graph(char *graph_raw);
-_Bool			is_node(const char *spot);
 int				add_node_links(char *graph_raw, t_node *node_arr);
 _Bool			node_name_eql(char const *line, char const *str);
 

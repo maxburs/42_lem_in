@@ -37,6 +37,17 @@ static void			error_on_line(char const *graph_raw, char const *ptr)
 
 static _Bool		validate_ant_count(char const **ptr)
 {
+	while ((*ptr)[0] == '#')
+	{
+		print_line("line with comment: ", *ptr);
+		if ((*ptr)[1] == '#')
+			return (1);
+		*ptr = line_end(*ptr);
+		if ((*ptr)[0] == '\n')
+			*ptr = *ptr + 1;
+		else if ((*ptr)[0] == '\0')
+			return (1);
+	}
 	while (ft_isdigit(**ptr))
 		*ptr = *ptr + 1;
 	if (**ptr != '\n')
@@ -99,7 +110,8 @@ int					validate_raw_graph(char *graph_raw)
 	char const		*ptr;
 
 	ptr = graph_raw;
-	validate_ant_count(&ptr);
+	if (validate_ant_count(&ptr))
+		return (0);
 	while (validate_room(ptr) == 0)
 	{
 		ptr = ft_strchr(ptr, '\n');

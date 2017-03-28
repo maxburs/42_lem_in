@@ -51,6 +51,13 @@ int		graph_doesnt_connect(t_node *graph)
 	return (1);
 }
 
+int		get_ant_count(char *graph_raw)
+{
+	while (*graph_raw == '#')
+		graph_raw = ft_strchr(graph_raw, '\n') + 1;
+	return ft_atoi(graph_raw);
+}
+
 int		main(int argc, char **argv)
 {
 	int		ants;
@@ -66,14 +73,15 @@ int		main(int argc, char **argv)
 	ft_printf("%s\n\n", graph_raw);
 	if (validate_raw_graph(graph_raw))
 		error(graph_raw, &graph);
-	ants = ft_atoi(graph_raw);
+	ants = get_ant_count(graph_raw);
+	ft_printf("\n\e[33;1mants:\e[0m %d\n\n", ants);
 	if (build_graph(graph_raw, &graph))
 		error(graph_raw, &graph);
 	ft_strdel(&graph_raw);
 	calc_node_distances(graph);
+	print_graph(graph);
 	if (graph_doesnt_connect(graph))
 		error(graph_raw, &graph);
-	print_graph(graph);
 	if (move_ants(graph, ants))
 		error(graph_raw, &graph);
 	free_graph(&graph);

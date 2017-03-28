@@ -16,10 +16,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-_Bool				is_node(const char *spot)
+static _Bool		is_node(const char *spot)
 {
 	int		space_count;
 
+	if (*spot == '#')
+		return (false);
 	space_count = 0;
 	while (*spot++ != '\n' && *spot != '\0')
 	{

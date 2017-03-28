@@ -15,6 +15,23 @@
 #include <lem_in.h>
 #include <stdbool.h>
 
+static _Bool	is_link(const char *spot)
+{
+	int		hyphen_count;
+
+	if (*spot == '#')
+		return (false);
+	hyphen_count = 0;
+	while (*spot++ != '\n' && *spot != '\0')
+	{
+		if (*spot == '-')
+			hyphen_count++;
+	}
+	if (hyphen_count != 1)
+		return (false);
+	return (true);
+}
+
 /*
 ** do a string and a line match
 */
@@ -70,7 +87,7 @@ int				add_node_links(char *graph_raw, t_node *node_arr)
 	graph_raw++;
 	while (true)
 	{
-		if (*graph_raw != '#' && !is_node(graph_raw))
+		if (*graph_raw != '#' && is_link(graph_raw))
 		{
 			if (add_link(node_arr, graph_raw, ft_strchr(graph_raw, '-') + 1))
 			{
