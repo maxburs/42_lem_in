@@ -16,6 +16,10 @@
 #include <stdlib.h>
 #include <limits.h>
 
+/*
+** BUG: handle no end or start
+*/
+
 int		g_flags;
 
 void	error(char *graph_raw, t_node **graph)
