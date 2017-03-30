@@ -57,9 +57,14 @@ int		graph_doesnt_connect(t_node *graph)
 
 int		get_ant_count(char *graph_raw)
 {
+	int		ants;
+
 	while (*graph_raw == '#')
 		graph_raw = ft_strchr(graph_raw, '\n') + 1;
-	return ft_atoi(graph_raw);
+	ants = ft_atoi(graph_raw);
+	if (g_flags & FLAG_VERBOSE)
+		ft_printf("\n\e[33;1mants:\e[0m %d\n\n", ants);
+	return (ants);
 }
 
 int		main(int argc, char **argv)
@@ -78,7 +83,6 @@ int		main(int argc, char **argv)
 	if (validate_raw_graph(graph_raw))
 		error(graph_raw, &graph);
 	ants = get_ant_count(graph_raw);
-	ft_printf("\n\e[33;1mants:\e[0m %d\n\n", ants);
 	if (build_graph(graph_raw, &graph))
 		error(graph_raw, &graph);
 	ft_strdel(&graph_raw);
