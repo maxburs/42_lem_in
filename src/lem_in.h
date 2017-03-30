@@ -42,7 +42,6 @@ typedef struct	s_state
 	t_node	*end;
 }				t_state;
 
-char const		*line_end(char const *line);
 void			free_graph(t_node **graph_head);
 int				move_ants(t_node *graph, int ants);
 int				*graph_order(t_node *graph);
@@ -64,6 +63,7 @@ void			calc_node_distances(t_node *graph);
 */
 
 t_node			*node_with_property(t_node *graph, char const *property);
+char const		*line_end(char const *line);
 
 /*
 ** ./verbose.c

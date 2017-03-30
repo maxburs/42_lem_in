@@ -16,10 +16,6 @@
 #include <stdlib.h>
 #include <limits.h>
 
-/*
-** BUG: handle no end or start
-*/
-
 int		g_flags;
 
 void	error(char *graph_raw, t_node **graph)
@@ -48,11 +44,17 @@ int		set_flags(int argc, char **argv)
 
 int		graph_doesnt_connect(t_node *graph)
 {
-	if (node_with_property(graph, "start")->distance != INT_MAX)
-		return (0);
-	if (g_flags & FLAG_VERBOSE)
-		ft_putstr("graph doesn't connect\n");
-	return (1);
+	t_node	*start;
+
+	if (NULL == (start =node_with_property(graph, "start")))
+		return (1);
+	if (start->distance == INT_MAX)
+	{
+		if (g_flags & FLAG_VERBOSE)
+			ft_putstr("graph doesn't connect\n");
+		return (1);
+	}
+	return (0);
 }
 
 int		get_ant_count(char *graph_raw)
