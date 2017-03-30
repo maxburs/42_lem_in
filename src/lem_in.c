@@ -88,11 +88,11 @@ int		main(int argc, char **argv)
 	if (build_graph(graph_raw, &graph))
 		error(graph_raw, &graph);
 	ft_strdel(&graph_raw);
-	calc_node_distances(graph);
-	print_graph(graph);
-	if (graph_doesnt_connect(graph))
+	if (calc_node_distances(graph))
 		error(graph_raw, &graph);
-	if (move_ants(graph, ants))
+	print_graph(graph);
+	if (graph_doesnt_connect(graph)
+		|| (move_ants(graph, ants))
 		error(graph_raw, &graph);
 	free_graph(&graph);
 	return (0);

@@ -39,8 +39,13 @@ static void		recurse_me(t_node *node, int distance)
 	}
 }
 
-void			calc_node_distances(t_node *graph)
+int			calc_node_distances(t_node *graph)
 {
+	t_node	*end;
+
 	set_nodes_distances(graph, INT_MAX);
-	recurse_me(node_with_property(graph, "end"), 0);
+	if (NULL == (end = node_with_property(graph, "end")))
+		return (-1);
+	recurse_me(end, 0);
+	return (0);
 }

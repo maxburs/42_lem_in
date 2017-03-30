@@ -55,10 +55,10 @@ static void		accept_ants_to_end(t_node *node, int *ants_received)
 
 static int		init_state(t_node *graph, t_state *state)
 {
-	if (!(state->start = node_with_property(graph, "start"))
-		|| !(state->end = node_with_property(graph, "end"))
-		|| !(state->order = graph_order(graph)))
-		return (1);
+	if (NULL == (state->start = node_with_property(graph, "start"))
+		|| NULL == (state->end = node_with_property(graph, "end"))
+		|| NULL == (state->order = graph_order(graph)))
+		return (-1);
 	state->ants_received = 0;
 	state->ants_deployed = 1;
 	state->start->ant = 1;
@@ -70,7 +70,7 @@ int				move_ants(t_node *graph, int ants)
 	t_state		state;
 	size_t		i;
 
-	if (init_state(graph, &state))
+	if (init_state(graph, &state) == -1)
 		return (1);
 	putverbose("\e[33;1mmoves:\n\n\e[0m");
 	while (state.ants_received < ants)
