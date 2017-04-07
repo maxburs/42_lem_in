@@ -46,7 +46,7 @@ int		graph_doesnt_connect(t_node *graph)
 {
 	t_node	*start;
 
-	if (NULL == (start =node_with_property(graph, "start")))
+	if (NULL == (start = node_with_property(graph, "start")))
 		return (1);
 	if (start->distance == INT_MAX)
 	{
@@ -92,7 +92,7 @@ int		main(int argc, char **argv)
 		error(graph_raw, &graph);
 	print_graph(graph);
 	if (graph_doesnt_connect(graph)
-		|| (move_ants(graph, ants))
+		|| move_ants(graph, ants))
 		error(graph_raw, &graph);
 	free_graph(&graph);
 	return (0);
