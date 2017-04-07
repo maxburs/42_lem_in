@@ -60,9 +60,20 @@ int		graph_doesnt_connect(t_node *graph)
 int		get_ant_count(char *graph_raw)
 {
 	int		ants;
+	char	*graph_dup;
 
 	while (*graph_raw == '#')
 		graph_raw = ft_strchr(graph_raw, '\n') + 1;
+	graph_dup = graph_raw;
+	while (*graph_dup != '\n' && *graph_dup != '\0')
+	{
+		if (*graph_dup < '0' || '9' < *graph_dup)
+		{
+			print_line("invalid ant count: ", graph_raw);
+			return (-1);
+		}
+		graph_dup++;
+	}
 	ants = ft_atoi(graph_raw);
 	if (g_flags & FLAG_VERBOSE)
 		ft_printf("\n\e[33;1mants:\e[0m %d\n\n", ants);
@@ -84,8 +95,8 @@ int		main(int argc, char **argv)
 	ft_printf("%s\n\n", graph_raw);
 	if (validate_raw_graph(graph_raw))
 		error(graph_raw, &graph);
-	ants = get_ant_count(graph_raw);
-	if (build_graph(graph_raw, &graph) || duplicate_props(graph))
+	if (0 > (ants = get_ant_count(graph_raw))
+		|| build_graph(graph_raw, &graph) || duplicate_props(graph))
 		error(graph_raw, &graph);
 	ft_strdel(&graph_raw);
 	if (calc_node_distances(graph))

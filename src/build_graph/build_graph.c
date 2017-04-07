@@ -33,8 +33,17 @@ static size_t		get_node_count(char const *graph_raw)
 	return (node_count);
 }
 
+/*
+** also checks to see if the name starts with 'L'
+*/
+
 static _Bool		is_name_duplicate(t_node *node_arr, char const *line)
 {
+	if (line[0] == 'L')
+	{
+		print_line("invalid name: ", line);
+		return (true);
+	}
 	while (node_arr->name)
 	{
 		if (node_name_eql(line, node_arr->name))
