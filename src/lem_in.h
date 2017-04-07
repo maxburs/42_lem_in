@@ -56,6 +56,8 @@ int				validate_raw_graph(char *graph_raw);
 int				add_node_links(char *graph_raw, t_node *node_arr);
 _Bool			node_name_eql(char const *line, char const *str);
 
+_Bool			is_node(const char *spot);
+
 int				calc_node_distances(t_node *graph);
 
 /*
@@ -64,6 +66,8 @@ int				calc_node_distances(t_node *graph);
 
 t_node			*node_with_property(t_node *graph, char const *property);
 char const		*line_end(char const *line);
+_Bool			is_prop_valid(char const *property);
+int				duplicate_props(struct s_node *graph);
 
 /*
 ** ./verbose.c

@@ -15,23 +15,7 @@
 #include <lem_in.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
-static _Bool		is_node(const char *spot)
-{
-	int		space_count;
-
-	if (*spot == '#')
-		return (false);
-	space_count = 0;
-	while (*spot++ != '\n' && *spot != '\0')
-	{
-		if (*spot == ' ')
-			space_count++;
-	}
-	if (space_count != 2)
-		return (false);
-	return (true);
-}
+#include <ft_printf.h>
 
 static size_t		get_node_count(char const *graph_raw)
 {
@@ -58,39 +42,59 @@ static _Bool		is_name_duplicate(t_node *node_arr, char const *line)
 			print_line("duplicate name: ", line);
 			return (true);
 		}
+		node_arr++;
 	}
 	return (false);
 }
 
+static int			bank_prop(char *graph_raw, char **property)
+{
+	if (*property != NULL)
+	{
+		if (g_flags && FLAG_VERBOSE)
+		{
+			ft_printf("cannot apply 2 properties too a node\n");
+			print_line("line: ", graph_raw);
+		}
+		return (-1);
+	}
+	graph_raw += 2;
+	*property = ft_strndup(graph_raw, line_end(graph_raw) - graph_raw);
+	if (false == is_prop_valid(*property))
+		ft_strdel(property);
+	return (0);
+}
+
 /*
 ** also inits links to null
+** || !(graph_raw++) is an awful hack
 */
 
 static int			add_node_names(char *graph_raw, t_node *node_arr)
 {
 	char		*property;
+	t_node		*node;
 
 	property = NULL;
+	node = node_arr;
 	while (true)
 	{
-		if (graph_raw[0] == '#' && graph_raw[1] == '#' && !property)
+		if (graph_raw[0] == '#' && graph_raw[1] == '#')
 		{
-			graph_raw += 2;
-			property = ft_strndup(graph_raw, line_end(graph_raw) - graph_raw);
+			if (-1 == bank_prop(graph_raw, &property))
+				return (1);
 		}
 		else if (is_node(graph_raw))
 		{
 			if (is_name_duplicate(node_arr, graph_raw))
 				return (1);
-			node_arr->name = ft_strndup(graph_raw, ft_strchri(graph_raw, ' '));
-			node_arr->property = property;
-			if (property)
-				property = NULL;
-			node_arr++;
+			node->name = ft_strndup(graph_raw, ft_strchri(graph_raw, ' '));
+			node->property = property;
+			property = NULL;
+			node++;
 		}
-		if ((graph_raw = ft_strchr(graph_raw, '\n')) == NULL)
+		if ((graph_raw = ft_strchr(graph_raw, '\n')) == NULL || !(graph_raw++))
 			break ;
-		graph_raw++;
 	}
 	return (0);
 }

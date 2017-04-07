@@ -85,7 +85,7 @@ int		main(int argc, char **argv)
 	if (validate_raw_graph(graph_raw))
 		error(graph_raw, &graph);
 	ants = get_ant_count(graph_raw);
-	if (build_graph(graph_raw, &graph))
+	if (build_graph(graph_raw, &graph) || duplicate_props(graph))
 		error(graph_raw, &graph);
 	ft_strdel(&graph_raw);
 	if (calc_node_distances(graph))

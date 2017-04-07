@@ -14,6 +14,7 @@
 #include <libft.h>
 #include <lem_in.h>
 #include <stdbool.h>
+#include <ft_printf.h>
 
 static _Bool	is_link(const char *spot)
 {
@@ -43,9 +44,12 @@ _Bool			node_name_eql(char const *line, char const *str)
 		line++;
 		str++;
 	}
-	if ((*line == '\0' || *line == '\n' || *line == '-') && *str == '\0')
-		return (1);
-	return (0);
+	if ((*line == '\0' || *line == '\n' || *line == '-' || *line == ' ')
+		&& *str == '\0')
+	{
+		return (true);
+	}
+	return (false);
 }
 
 /*

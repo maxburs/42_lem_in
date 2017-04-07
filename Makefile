@@ -27,6 +27,7 @@ SRC = \
 		$(addprefix build_graph/, \
 			add_node_links.c \
 			build_graph.c \
+			build_graph2.c \
 			get_raw_graph.c \
 			validate_raw_graph.c \
 		) \
