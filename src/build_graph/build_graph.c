@@ -56,6 +56,7 @@ static int			bank_prop(char *graph_raw, char **property)
 			ft_printf("cannot apply 2 properties too a node\n");
 			print_line("line: ", graph_raw);
 		}
+		ft_strdel(property);
 		return (-1);
 	}
 	graph_raw += 2;
